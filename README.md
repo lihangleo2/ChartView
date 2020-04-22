@@ -8,6 +8,8 @@
 #### ChartView诞生了
 * [ChartView诞生日](https://github.com/lihangleo2/ChartView/wiki) 
 
+<br>
+
 # 一、折线统计图
 <strong>效果展示:</strong>
 
@@ -93,12 +95,14 @@ xml里只需要这样：
 ```
 
 <br>
+<br>
 
 ## 折线统计图属性
 在我们还未设置任何属性的时候，我们的坐标轴长这样：
 
 <img src="https://github.com/lihangleo2/ChartView/blob/master/gifs/source1.png" alt="Sample"  width="350">
 
+<br>
 <br>
 
 #### 1、坐标轴颜色  app:cl_axesColor="#ff0000"
@@ -109,6 +113,7 @@ xml里只需要这样：
 <img src="https://github.com/lihangleo2/ChartView/blob/master/gifs/axexAbout.png" alt="Sample"  width="350">
 
 <br>
+<br>
 
 #### 3、刻度值颜色  app:cl_divideColor="#ff0000"
 #### 4、刻度值宽度（粗细）  app:cl_divideWith="2dp"
@@ -118,4 +123,10 @@ xml里只需要这样：
 
 <img src="https://github.com/lihangleo2/ChartView/blob/master/gifs/divideAbout.png" alt="Sample"  width="350">
 
+<br>
+<br>
 
+#### 6、是否隐藏奇数刻度值（解决刻度值过密） app:cl_divide_hideOdd="true" 
+
+图1为刻度值过密 --> 图2为隐藏奇数刻度值
+<img src="https://github.com/lihangleo2/ChartView/blob/master/gifs/moreDivide1.png" alt="Sample"  width="350"><img src="https://github.com/lihangleo2/ChartView/blob/master/gifs/hideOdd2.png" alt="Sample"  width="350">
