@@ -49,6 +49,7 @@ xml里只需要这样：
     android:layout_height="200dp"
     />
 ```
+
 初始化数据代码：
 ```java
     public void initData() {
@@ -97,7 +98,7 @@ xml里只需要这样：
 <br>
 <br>
 
-## 折线统计图属性
+## 折线统计图自定义属性
 在我们还未设置任何属性的时候，我们的坐标轴长这样：
 
 <img src="https://github.com/lihangleo2/ChartView/blob/master/gifs/source1.png" alt="Sample"  width="350">
@@ -203,5 +204,59 @@ xml里只需要这样：
 <br>
 <br>
 
+#### 26、折线图动画时间  app:cl_lineAnim_duration="1500"
 
+<br>
+<br>
+
+# 二、饼状统计图
+同样我们先看看饼状统计图的效果：
+
+|添加/移除item|初始角度startAngle|圆环or扇形|
+|:---:|:---:|:---:|
+|![](https://github.com/lihangleo2/ChartView/blob/master/gifs/circle/addItem1.gif)|![](https://github.com/lihangleo2/ChartView/blob/master/gifs/circle/startAngle2.gif)|![](https://github.com/lihangleo2/ChartView/blob/master/gifs/circle/isArc3.gif)
+|圆环比率|
+|![](https://github.com/lihangleo2/ChartView/blob/master/gifs/circle/circleRate4.gif)|
+
+<br>
+
+## 使用(未使用自定义属性，则使用默认值)
+```xml
+<com.lihang.chart.ChartCircleView
+    android:id="@+id/charCircleView"
+    android:layout_width="wrap_content"
+    android:layout_height="200dp" />
+```
+
+初始化数据代码：
+```java
+    private void initData() {
+        ArrayList<ChartCircleItem> items = new ArrayList<>();
+        /*
+        * 参数：
+        * 1、当前的value的值
+        * 2、绘制此部分的颜色值
+        * 3、此部分的文字描述
+        * */
+        items.add(new ChartCircleItem(1, R.color.yellow, "原价"));
+        items.add(new ChartCircleItem(3, R.color.blue, "优惠"));
+        //设置数据源
+        charCircleView.setItems(items);
+    }
+```
+
+这样你就能用了。soEasy！
+
+<br>
+<br>
+
+## 饼状统计图自定义属性
+
+#### 文字大小  app:cv_textSize="16sp"
+#### 文字颜色  app:cv_textColor="#ff0000"
+#### 初始旋转角度  app:cv_startAngle="-90"
+#### 圆环比率  app:cv_rate="0.68"
+#### 扇形or圆环  app:cv_isArc="true"
+#### 圆环动画时间  app:cv_animDuration="1500"
+#### 是否需要动画  app:cv_isAnim="true"
 
