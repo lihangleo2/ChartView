@@ -6,4 +6,6 @@
 * ChartCircleView 饼状统计图
 
 #### ChartView诞生了
-* [Shadow成长历程](https://github.com/lihangleo2/ShadowLayout/wiki) 
+* [ChartView诞生日](https://github.com/lihangleo2/ChartView/wiki) 
+
+
