@@ -129,4 +129,41 @@ xml里只需要这样：
 #### 6、是否隐藏奇数刻度值（解决刻度值过密） app:cl_divide_hideOdd="true" 
 
 图1为刻度值过密 --> 图2为隐藏奇数刻度值
+
 <img src="https://github.com/lihangleo2/ChartView/blob/master/gifs/moreDivide1.png" alt="Sample"  width="350"><img src="https://github.com/lihangleo2/ChartView/blob/master/gifs/hideOdd2.png" alt="Sample"  width="350">
+
+<br>
+<br>
+
+#### 7、坐标轴文字颜色  app:cl_textColor="#ff0000"
+#### 8、坐标轴文字大小  app:cl_textSize="15dp"
+
+修改后如图：
+
+<img src="https://github.com/lihangleo2/ChartView/blob/master/gifs/textAbout.png" alt="Sample"  width="350">
+
+<br>
+<br>
+
+#### 9、纵轴最大值  app:cl_max="1000"
+#### 10、纵轴分几段  app:cl_span="4"
+> 这里要注意，如果传入的数值中，有比最大值还大，那么最终最大值为  传入数值最大值+设置最大值/4 
+
+修改后如图：
+
+<img src="https://github.com/lihangleo2/ChartView/blob/master/gifs/maxAndSpan.png" alt="Sample"  width="350">
+
+<br>
+<br>
+
+#### 11、是否隐藏Y轴  app:cl_hideY="true"
+
+修改后如图：
+
+<img src="https://github.com/lihangleo2/ChartView/blob/master/gifs/hideY.png" alt="Sample"  width="350">
+
+<br>
+<br>
+
+
+
