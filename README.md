@@ -50,6 +50,8 @@ xml里只需要这样：
     />
 ```
 
+<br>
+
 初始化数据代码：
 ```java
     public void initData() {
@@ -228,6 +230,8 @@ xml里只需要这样：
     android:layout_height="200dp" />
 ```
 
+<br>
+
 初始化数据代码：
 ```java
     private void initData() {
@@ -252,11 +256,39 @@ xml里只需要这样：
 
 ## 饼状统计图自定义属性
 
-#### 文字大小  app:cv_textSize="16sp"
-#### 文字颜色  app:cv_textColor="#ff0000"
-#### 初始旋转角度  app:cv_startAngle="-90"
-#### 圆环比率  app:cv_rate="0.68"
-#### 扇形or圆环  app:cv_isArc="true"
-#### 圆环动画时间  app:cv_animDuration="1500"
+#### 1、文字大小  app:cv_textSize="16sp"
+- 这里指的是demo中原价/优惠的字体大小
+<br>
+
+#### 2、文字颜色  app:cv_textColor="#ff0000"
+- demo中原价/优惠字体颜色
+<br>
+
+#### 3、初始旋转角度  app:cv_startAngle="-90"
+- 可以控制统计图从哪个角度开始启动。默认是0度
+<br>
+
+#### 4、圆环比率  app:cv_rate="0.68"
+- 圆环比率，这里可以简单认为是控制圆环粗细的属性
+<br>
+
+#### 5、扇形or圆环  app:cv_isArc="true"
+- 改变控件外观。默认为圆环状，通过app:cv_isArc="true"可改变为扇形
+<br>
+
+#### 6、圆环动画时间  app:cv_animDuration="1500"
+- 圆环开始到结束的动画时间
+<br>
+
 #### 是否需要动画  app:cv_isAnim="true"
+- 圆环是否需要动画。这里要注意也可以动态改变，最终以代码为最终结果
+```java
+//改变是否需要动画有2种方法
+//方法1.
+charCircleView.setAnim(true);
+
+//方法2.（设置数据的时候）
+charCircleView.setItems(true,items);
+
+```
 
