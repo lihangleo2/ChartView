@@ -165,5 +165,43 @@ xml里只需要这样：
 <br>
 <br>
 
+#### 12、Y轴刻度值虚线是否显示  app:cl_Y_showDash="true"
+#### 13、Y轴刻度值虚线颜色  app:cl_Y_dashColor="#CCCCCC"
+#### 14、Y轴刻度值虚线宽度（粗细）  app:cl_Y_dashWith="1dp"
+#### 15、Y轴刻度值虚线间隔  app:cl_Y_dashDivide="10dp"
+#### 16、Y轴刻度值虚线的实线长度  app:cl_Y_dash_solidLength="5dp"
+
+修改后如图：
+
+<img src="https://github.com/lihangleo2/ChartView/blob/master/gifs/yDash.png" alt="Sample"  width="350">
+
+<br>
+<br>
+
+#### 17、手势虚线颜色 app:cl_dashColor="#ff0000"
+#### 18、手势虚线宽度（粗细）  app:cl_dashWith="1dp"
+#### 19、手势虚线间隔  app:cl_dashDivide="10dp"
+#### 20、手势虚线的实线长度  app:cl_dash_solidLength="5dp"
+#### 21、手指离开后多久，虚线消失  app:cl_dashStay_duration="1500"（-1表示常驻不会消失）
+#### 22、是否禁止手势操作  app:cl_isOnTouch="false"
+
+修改后如图：
+
+<img src="https://github.com/lihangleo2/ChartView/blob/master/gifs/dashOnTouch.png" alt="Sample"  width="350">
+
+<br>
+<br>
+
+#### 23、提醒背景颜色  app:cl_remind_backColor="#00BCD4"
+#### 24、提醒文字颜色  app:cl_remind_textColor="#ff0000"
+#### 25、提醒文字大小  app:cl_remind_textSize="15dp"
+
+修改后如图：
+
+<img src="https://github.com/lihangleo2/ChartView/blob/master/gifs/remind.png" alt="Sample"  width="350">
+
+<br>
+<br>
+
 
 
