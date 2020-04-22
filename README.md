@@ -43,10 +43,11 @@
 <img src="https://github.com/lihangleo2/ChartView/blob/master/gifs/source1.png" alt="Sample"  width="350">
 
 ### 坐标轴相关属性
-* <strong>修改坐标轴颜色</strong>  app:cl_axesColor="#ff0000"
-* <strong>修改坐标轴宽度（粗细）</strong>  app:cl_axesWidth="2dp"
+* <strong>1.修改坐标轴颜色</strong>  app:cl_axesColor="#ff0000"
+* <strong>2.修改坐标轴宽度（粗细）</strong>  app:cl_axesWidth="2dp"
 
 修改后的效果如图：
+
 <img src="https://github.com/lihangleo2/ChartView/blob/master/gifs/axexAbout.png" alt="Sample"  width="350">
 
 
