@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.lihang.chart.ChartCircleView
+            android:id="@+id/charCircleView"
+            android:layout_width="wrap_content"
+            android:layout_height="200dp" />
+
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/charCircleView">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <!-- 添加item -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/MyTextStyle"
+                        android:text="1、添加移除item" />
+
+                    <RadioGroup
+                        android:id="@+id/rg_item"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/radio_item_add"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="添加" />
+
+                        <RadioButton
+                            android:id="@+id/radio_item_remove"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:text="移除" />
+
+
+
+                    </RadioGroup>
+
+                </LinearLayout>
+
+                <!-- 改变初始角度-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/MyTextStyle"
+                        android:text="2、改变初始角度" />
+
+                    <RadioGroup
+                        android:id="@+id/rg_startAngle"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        >
+
+                        <RadioButton
+                            android:id="@+id/radio_starAngle_dm_90"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="-90" />
+
+                        <RadioButton
+                            android:checked="true"
+                            android:id="@+id/radio_starAngle_0"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:text="0" />
+
+                        <RadioButton
+                            android:id="@+id/radio_starAngle_90"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:text="90" />
+
+                    </RadioGroup>
+
+                </LinearLayout>
+
+                <!-- 改变形状-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/MyTextStyle"
+                        android:text="3、改变形状" />
+
+                    <RadioGroup
+                        android:id="@+id/rg_shape"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:checked="true"
+                            android:id="@+id/radio_circleRound"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="环状" />
+
+                        <RadioButton
+                            android:id="@+id/radio_Arc"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:text="扇形" />
+
+
+
+                    </RadioGroup>
+
+                </LinearLayout>
+
+                <!-- 改变圆环比率-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/MyTextStyle"
+                        android:text="4、圆环比率(环状)" />
+
+                    <RadioGroup
+                        android:id="@+id/rg_rate"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/radio_rate_35"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0.35f" />
+
+                        <RadioButton
+                            android:checked="true"
+                            android:id="@+id/radio_rate_68"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:text="0.68f" />
+
+                        <RadioButton
+                            android:id="@+id/radio_rate_85"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:text="0.85f" />
+
+                    </RadioGroup>
+
+                </LinearLayout>
+
+                <!-- 是否需要动画-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/MyTextStyle"
+                        android:text="5、有无动画" />
+
+                    <RadioGroup
+                        android:id="@+id/rg_anim"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:checked="true"
+                            android:id="@+id/radio_ainm_true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="有" />
+
+                        <RadioButton
+                            android:id="@+id/radio_anim_false"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:text="无" />
+
+                    </RadioGroup>
+
+                </LinearLayout>
+
+                <!-- 动画时间-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/MyTextStyle"
+                        android:text="6、动画时间" />
+
+                    <RadioGroup
+                        android:id="@+id/rg_animDuration"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:checked="true"
+                            android:id="@+id/radio_duration_500"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="500" />
+
+                        <RadioButton
+                            android:checked="true"
+                            android:id="@+id/radio_duration_1000"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:text="1000" />
+
+                        <RadioButton
+                            android:id="@+id/radio_duration_2000"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:text="2000" />
+
+                    </RadioGroup>
+
+                </LinearLayout>
+
+                <!-- 改变文字大小 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/MyTextStyle"
+                        android:text="7、改变文字大小" />
+
+                    <RadioGroup
+                        android:id="@+id/rg_textSize"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/radio_txtSize_10"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="10" />
+
+                        <RadioButton
+                            android:checked="true"
+                            android:id="@+id/radio_txtSize_32"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:text="32" />
+
+                        <RadioButton
+                            android:id="@+id/radio_txtSize_50"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:text="50" />
+
+                    </RadioGroup>
+
+                </LinearLayout>
+
+                <!-- 改变文字颜色 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/MyTextStyle"
+                        android:text="8、改变文字颜色" />
+
+                    <RadioGroup
+                        android:id="@+id/rg_textColor"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/radio_txtColor_red"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="红色" />
+
+                        <RadioButton
+                            android:checked="true"
+                            android:id="@+id/radio_txtColor_black"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:text="黑色" />
+
+                    </RadioGroup>
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+        </ScrollView>
+
+    </RelativeLayout>
+</layout>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ChartLineView">
+
+        <attr name="cl_background" format="color" /> <!--背景颜色-->
+
+        <!-- 坐标轴 -->
+        <attr name="cl_axesColor" format="color" /> <!--坐标轴颜色值-->
+        <attr name="cl_axesWidth" format="dimension" /> <!--坐标轴宽度-->
+
+        <attr name="cl_divideWith" format="dimension" /> <!--刻度值宽度-->
+        <attr name="cl_divideHeight" format="dimension" /> <!--刻度值高度-->
+        <attr name="cl_divideColor" format="color" /> <!--刻度值颜色值-->
+        <attr name="cl_divide_hideOdd" format="boolean" /> <!-- 是否隐藏奇数刻度值(解决刻度值过密) -->
+
+
+        <attr name="cl_textColor" format="color" /> <!--文字颜色-->
+        <attr name="cl_textSize" format="dimension" /> <!--文字大小-->
+
+        <attr name="cl_max" format="integer" /> <!--最大值-->
+        <attr name="cl_span" format="integer" /> <!--纵轴的分段-->
+        <attr name="cl_hideY" format="boolean" /> <!--是否隐藏Y轴-->
+
+
+
+
+        <!-- Y轴刻度值虚线 -->
+        <attr name="cl_Y_showDash" format="boolean" /> <!--纵轴刻度值虚线是否显示-->
+        <attr name="cl_Y_dashColor" format="color" /> <!--纵轴刻度值虚线颜色-->
+        <attr name="cl_Y_dashWith" format="dimension" /> <!--纵轴刻度值虚线宽度-->
+        <attr name="cl_Y_dashDivide" format="dimension" /> <!--纵轴刻度值虚线间隔-->
+        <attr name="cl_Y_dash_solidLength" format="dimension" /> <!--纵轴刻度值虚线的实线长度-->
+
+
+        <!-- 手势后提醒文字 -->
+        <attr name="cl_remind_textSize" format="dimension" /> <!--提醒文字大小-->
+        <attr name="cl_remind_textColor" format="color" /> <!--提醒文字颜色-->
+        <attr name="cl_remind_backColor" format="color" /> <!--提醒背景颜色值-->
+
+
+        <!-- 手势虚线 -->
+        <attr name="cl_dashColor" format="color" /> <!--虚线颜色-->
+        <attr name="cl_dashWith" format="dimension" /> <!--虚线宽度-->
+        <attr name="cl_dashDivide" format="dimension" /> <!--虚线间隔-->
+        <attr name="cl_dash_solidLength" format="dimension" /> <!--虚线实线的高度-->
+        <attr name="cl_dashStay_duration" format="integer" /> <!--虚线存在多长时间后消失，-1的话则一直存在-->
+        <attr name="cl_isOnTouch" format="boolean" /> <!--是否禁止手势操作-->
+
+        <!-- 折线图动画的时间 (关于折线相关的设置在代码setItems里)-->
+        <attr name="cl_lineAnim_duration" format="integer" /> <!--折线动画时间-->
+
+    </declare-styleable>
+
+
+    <declare-styleable name="ChartCircleView">
+        <attr name="cv_background" format="color" /> <!--背景色-->
+        <attr name="cv_textSize" format="dimension" /> <!--文字大小-->
+        <attr name="cv_textColor" format="color" /> <!--文字颜色-->
+        <attr name="cv_startAngle" format="integer" /> <!--初始旋转角度-->
+        <attr name="cv_rate" format="float" /> <!--圆环比率，也可理解为圆环with比率-->
+        <attr name="cv_animDuration" format="integer" /> <!--动画时间-->
+        <attr name="cv_isArc" format="boolean" /> <!--形状是否为扇形-->
+        <attr name="cv_isAnim" format="boolean" /> <!--是否需要动画-->
+    </declare-styleable>
+</resources>
