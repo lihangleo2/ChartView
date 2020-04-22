@@ -93,7 +93,7 @@ xml里只需要这样：
         items.add(new ChartLineItem(points, R.color.red, "昨日", true, true));
         items.add(new ChartLineItem(points_second, R.color.black, "今日", true, true));
         //设置折线数据源
-        binding.chartLineView.setItems(items);
+        chartLineView.setItems(items);
     }
 ```
 
