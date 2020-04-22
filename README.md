@@ -37,7 +37,7 @@
    
 <br>
 
-## 使用（未用到属性，则默认属性）
+## 使用（未用到自定义属性，则使用默认值）
 xml里只需要这样：
 
 ```xml
@@ -92,7 +92,7 @@ xml里只需要这样：
     }
 ```
 
-
+<br>
 
 ## 折线统计图属性
 在我们还未设置任何属性的时候，我们的坐标轴长这样：
@@ -101,13 +101,21 @@ xml里只需要这样：
 
 <br>
 
-### 坐标轴相关属性
-* <strong>1.修改坐标轴颜色</strong>  app:cl_axesColor="#ff0000"
-* <strong>2.修改坐标轴宽度（粗细）</strong>  app:cl_axesWidth="2dp"
+#### 1、坐标轴颜色  app:cl_axesColor="#ff0000"
+#### 2、坐标轴宽度（粗细）</strong>  app:cl_axesWidth="2dp"
 
-修改后的效果如图：
+修改后如图：
 
 <img src="https://github.com/lihangleo2/ChartView/blob/master/gifs/axexAbout.png" alt="Sample"  width="350">
 
+<br>
+
+#### 3、刻度值颜色  app:cl_divideColor="#ff0000"
+#### 4、刻度值宽度（粗细）  app:cl_divideWith="2dp"
+#### 5、刻度值高度  app:cl_divideHeight="5dp"
+
+修改后如图：
+
+<img src="https://github.com/lihangleo2/ChartView/blob/master/gifs/divideAbout.png" alt="Sample"  width="350">
 
 
