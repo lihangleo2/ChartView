@@ -14,15 +14,16 @@ import android.graphics.PathMeasure;
 import android.graphics.Shader;
 import android.os.Handler;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 
-
+import com.lihang.chart.R;
+import com.lihang.chart.utils.ChartHistogramItem;
 import com.lihang.chart.utils.ChartLineItem;
 import com.lihang.chart.utils.ChartUtilBean;
 import com.lihang.chart.utils.DensityUtils;
-import com.lihang.chart.R;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -32,9 +33,9 @@ import androidx.annotation.Nullable;
 /**
  * Created by leo
  * on 2020/4/14.
- * 折线图或曲线图
+ * 柱状图
  */
-public class ChartLineView extends View {
+public class ChartHistogramView extends View {
     private int mWidth; //  控件宽度
     private int mHeight; //  控件高度
     private float xOrigin; //  x轴原点坐标
@@ -68,7 +69,6 @@ public class ChartLineView extends View {
     private Paint mPaintRemindBg;//提醒背景的画笔
     private int mRemindBackColor;//提醒背景颜色
 
-    private ArrayList<String> horiItems; // 横向坐标的标识
     private int maxValue; //纵向的最大值，最小值默认为0
     private int span; // 纵向分为几段
     float halveX; //x轴的等分长度
@@ -92,7 +92,7 @@ public class ChartLineView extends View {
 
 
     //数据源
-    private ArrayList<ChartLineItem> items;
+    private ArrayList<ChartHistogramItem> items;
     private ArrayList<ChartUtilBean> utilBeans;
 
     private float mProgress;    //  动画进度
@@ -112,7 +112,7 @@ public class ChartLineView extends View {
     private boolean isCurve;//是否需要曲线
 
 
-    public void setItems(ArrayList<ChartLineItem> items) {
+    public void setItems(ArrayList<ChartHistogramItem> items) {
         this.items = items;
         initItemPaint(items);
         if (mWidth != 0) {
@@ -129,7 +129,7 @@ public class ChartLineView extends View {
         startAnim();
     }
 
-    private void initItemPaint(ArrayList<ChartLineItem> items) {
+    private void initItemPaint(ArrayList<ChartHistogramItem> items) {
         if (items != null && items.size() > 0) {
             int myMaxValue = 0;
             utilBeans = new ArrayList<>();
@@ -153,12 +153,9 @@ public class ChartLineView extends View {
                 utilBeans.add(chartUtilBean);
 
                 //筛选最大值
-                ArrayList<Integer> datas = items.get(i).getSource();
-                for (int j = 0; j < datas.size(); j++) {
-                    int value = datas.get(j);
-                    if (value > myMaxValue) {
-                        myMaxValue = value;
-                    }
+                int value = items.get(i).getValue();
+                if (value > myMaxValue) {
+                    myMaxValue = value;
                 }
             }
 
@@ -170,20 +167,15 @@ public class ChartLineView extends View {
     }
 
 
-    public void setHoriItems(ArrayList<String> horiItems) {
-        this.horiItems = horiItems;
-    }
-
-
-    public ChartLineView(Context context) {
+    public ChartHistogramView(Context context) {
         this(context, null);
     }
 
-    public ChartLineView(Context context, @Nullable AttributeSet attrs) {
+    public ChartHistogramView(Context context, @Nullable AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public ChartLineView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public ChartHistogramView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.ChartLineView);
         mBgColor = typedArray.getColor(R.styleable.ChartLineView_cl_background, Color.WHITE);
@@ -297,7 +289,7 @@ public class ChartLineView extends View {
             xOrigin = mMargin10;
             yOrigin = (mHeight - mTextSize - mMargin10);
 
-            halveX = (mWidth - 3 * mMargin10) / horiItems.size();
+            halveX = (mWidth - 3 * mMargin10) / (items.size() + 1);
             halveY = (yOrigin - mMargin10 * 2) / span;
             //设置背景颜色
             setBackgroundColor(mBgColor);
@@ -325,79 +317,6 @@ public class ChartLineView extends View {
             canvas.drawPath(pathDash, mPaintDash);
         }
 
-        //如果是手指放开时，那么则
-        if (isActionUp) {
-            isActionUp = false;
-            //横坐标是downX
-            if (items != null && items.size() > 0) {
-                ArrayList<String> stringArray = new ArrayList<>();
-                for (int i = 0; i < items.size(); i++) {
-                    ArrayList<Integer> datas = items.get(i).getSource();
-                    String str;
-
-                    if (datas != null && datas.size() > 0) {
-                        if (datas.size() - 1 >= currentIndex) {
-                            float yPrecent = (float) datas.get(currentIndex) * (float) span / (float) maxValue;
-                            float centerY = yOrigin - yPrecent * halveY;
-                            canvas.drawCircle(downX, centerY, 10, utilBeans.get(i).getmPaintCircle());
-                            canvas.drawCircle(downX, centerY, 5, mPaintPoint_white);
-                            str = items.get(i).getDescribeName() + ": " + datas.get(currentIndex);
-                        } else {
-                            str = items.get(i).getDescribeName() + ": --";
-                        }
-                    } else {
-                        str = items.get(i).getDescribeName() + ": --";
-                    }
-
-                    stringArray.add(str);
-                }
-
-
-                int textWith = 0;
-
-                for (int i = 0; i < stringArray.size(); i++) {
-                    int tempWith = (int) mPaintRemind.measureText(stringArray.get(i));
-                    if (tempWith > textWith) {
-                        textWith = tempWith;
-                    }
-                }
-
-
-                if (halveX * currentIndex + textWith + 70 < mWidth - 3 * mMargin10) {
-                    Path pathBackground = new Path();
-                    pathBackground.moveTo(downX, mMargin10);
-                    pathBackground.lineTo(downX + 50, mMargin10 + 20);
-                    pathBackground.lineTo(downX + 50, mMargin10 + stringArray.size() * mTextSizeRemind + 20);
-                    pathBackground.lineTo(downX + textWith + 70, mMargin10 + stringArray.size() * mTextSizeRemind + 20);
-                    pathBackground.lineTo(downX + textWith + 70, mMargin10);
-                    pathBackground.close();
-                    // 背景
-                    canvas.drawPath(pathBackground, mPaintRemindBg);
-                    //绘制昨日今日
-                    for (int i = 0; i < stringArray.size(); i++) {
-                        canvas.drawText(stringArray.get(i), downX + 60, mMargin10 + mTextSizeRemind * (i + 1) + 5, mPaintRemind);
-                    }
-                } else {
-                    Path pathBackground = new Path();
-                    pathBackground.moveTo(downX, mMargin10);
-                    pathBackground.lineTo(downX - 50, mMargin10 + 20);
-                    pathBackground.lineTo(downX - 50, mMargin10 + stringArray.size() * mTextSizeRemind + 20);
-                    pathBackground.lineTo(downX - textWith - 70, mMargin10 + stringArray.size() * mTextSizeRemind + 20);
-                    pathBackground.lineTo(downX - textWith - 70, mMargin10);
-                    pathBackground.close();
-                    // 背景
-                    canvas.drawPath(pathBackground, mPaintRemindBg);
-                    //绘制昨日今日
-                    for (int i = 0; i < stringArray.size(); i++) {
-                        canvas.drawText(stringArray.get(i), downX - 60 - textWith, mMargin10 + mTextSizeRemind * (i + 1) + 5, mPaintRemind);
-                    }
-                }
-            }
-            if (dashStayDuration > 0) {
-                mHandler.removeCallbacks(runnable);
-                mHandler.postDelayed(runnable, dashStayDuration);
-            }
-        }
     }
 
 
@@ -416,76 +335,32 @@ public class ChartLineView extends View {
     //计算第一条曲线的path,还有阴影的方法
     private void calculLine() {
         if (items != null && items.size() > 0) {
-
+            float offsetX = halveX / 4;
             for (int i = 0; i < items.size(); i++) {
-                ArrayList<Integer> datas = items.get(i).getSource();
+
+
                 ChartUtilBean chartUtilBean = utilBeans.get(i);
                 //折线路径
                 Path mPath = new Path();
-                boolean isWithShadow = items.get(i).isWithShadow();
-                Path mPathShader = null;
-                if (isWithShadow) {
-                    mPathShader = new Path();
-                }
+                Path mPathShader = new Path();
 
-
-                if (isCurve) {
-                    for (int j = 0; j < datas.size(); j++) {
-
-                        if (j != datas.size() - 1) {
-                            if (j == 0) {
-                                mPath.moveTo(getChatX(j), getChatY(datas.get(j)));
-                                if (mPathShader != null) {
-                                    mPathShader.moveTo(getChatX(j), getChatY(datas.get(j)));
-                                }
-                            }
-                            mPath.cubicTo((getChatX(j) + getChatX(j + 1)) / 2,
-                                    getChatY(datas.get(j)),
-                                    (getChatX(j) + getChatX(j + 1)) / 2,
-                                    getChatY(datas.get(j + 1)),
-                                    getChatX(j + 1),
-                                    getChatY(datas.get(j + 1)));
-                            if (mPathShader != null) {
-                                mPathShader.cubicTo((getChatX(j) + getChatX(j + 1)) / 2,
-                                        getChatY(datas.get(j)),
-                                        (getChatX(j) + getChatX(j + 1)) / 2,
-                                        getChatY(datas.get(j + 1)),
-                                        getChatX(j + 1),
-                                        getChatY(datas.get(j + 1)));
-                            }
-                        } else {
-                            if (mPathShader != null) {
-                                mPathShader.lineTo(getChatX(j), yOrigin);
-                                mPathShader.lineTo(xOrigin, yOrigin);
-                                mPathShader.close();
-                            }
-                        }
-                    }
+                float x = (i + 1) * halveX + xOrigin;
+                float yPrecent;
+                if (items.get(i).isWithAnim()) {
+                    yPrecent = (float) items.get(i).getValue() * mProgress * (float) span / (float) maxValue;
                 } else {
-
-                    for (int j = 0; j < datas.size(); j++) {
-                        float x = j * halveX + xOrigin;
-                        float yPrecent = (float) datas.get(j) * (float) span / (float) maxValue;
-                        if (j == 0) {
-                            mPath.moveTo(x, yOrigin - yPrecent * halveY);
-                            if (mPathShader != null) {
-                                mPathShader.moveTo(x, yOrigin - yPrecent * halveY);
-                            }
-                        } else {
-                            mPath.lineTo(x, yOrigin - yPrecent * halveY);
-                            if (mPathShader != null) {
-                                mPathShader.lineTo(x, yOrigin - yPrecent * halveY);
-                            }
-
-                            if (j == datas.size() - 1 && mPathShader != null) {
-                                mPathShader.lineTo(x, yOrigin);
-                                mPathShader.lineTo(xOrigin, yOrigin);
-                                mPathShader.close();
-                            }
-                        }
-                    }
-
+                    yPrecent = (float) items.get(i).getValue() * (float) span / (float) maxValue;
                 }
+                mPath.moveTo(x - offsetX, yOrigin);
+                mPath.lineTo(x - offsetX, yOrigin - yPrecent * halveY);
+                mPath.lineTo(x + offsetX, yOrigin - yPrecent * halveY);
+                mPath.lineTo(x + offsetX, yOrigin);
+
+                mPathShader.moveTo(x - offsetX, yOrigin);
+                mPathShader.lineTo(x - offsetX, yOrigin - yPrecent * halveY);
+                mPathShader.lineTo(x + offsetX, yOrigin - yPrecent * halveY);
+                mPathShader.lineTo(x + offsetX, yOrigin);
+                mPathShader.close();
 
 
                 chartUtilBean.setmPath(mPath);
@@ -493,23 +368,21 @@ public class ChartLineView extends View {
 
 
                 //如果是需要带折线阴影的话，那么加上
-                if (isWithShadow) {
-                    //初始化折线阴影的画笔
-                    Paint paintShadow = new Paint();
-                    paintShadow.setAntiAlias(true);
-                    paintShadow.setStrokeWidth(2f);
+                //初始化折线阴影的画笔
+                Paint paintShadow = new Paint();
+                paintShadow.setAntiAlias(true);
+                paintShadow.setStrokeWidth(2f);
 
-                    int currentColor = getContext().getResources().getColor(items.get(i).getColor());
-                    int red = Color.red(currentColor);
-                    int green = Color.green(currentColor);
-                    int blue = Color.blue(currentColor);
-                    int[] shadeColors = new int[]{
-                            Color.argb(100, red, green, blue), Color.argb(35, red, green, blue),
-                            Color.argb(0, red, green, blue)};
-                    Shader mShader = new LinearGradient(0, 0, 0, getHeight(), shadeColors, null, Shader.TileMode.CLAMP);
-                    paintShadow.setShader(mShader);
-                    chartUtilBean.setmPaintShadow(paintShadow);
-                }
+                int currentColor = getContext().getResources().getColor(items.get(i).getColor());
+                int red = Color.red(currentColor);
+                int green = Color.green(currentColor);
+                int blue = Color.blue(currentColor);
+                int[] shadeColors = new int[]{
+                        Color.argb(100, red, green, blue), Color.argb(100, red, green, blue),
+                        Color.argb(100, red, green, blue)};
+                Shader mShader = new LinearGradient(0, 0, 0, getHeight(), shadeColors, null, Shader.TileMode.CLAMP);
+                paintShadow.setShader(mShader);
+                chartUtilBean.setmPaintShadow(paintShadow);
             }
 
 
@@ -520,9 +393,7 @@ public class ChartLineView extends View {
         for (int i = 0; i < utilBeans.size(); i++) {
             ChartUtilBean chartUtilBean = utilBeans.get(i);
             //  绘制渐变阴影
-            if (items.get(i).isWithShadow()) {
-                canvas.drawPath(chartUtilBean.getmPathShadow(), chartUtilBean.getmPaintShadow());
-            }
+            canvas.drawPath(chartUtilBean.getmPathShadow(), chartUtilBean.getmPaintShadow());
             //是否带动画
             if (items.get(i).isWithAnim()) {
                 PathMeasure measure = new PathMeasure(chartUtilBean.getmPath(), false);
@@ -543,23 +414,40 @@ public class ChartLineView extends View {
         canvas.drawLine(xOrigin, yOrigin, mWidth - mMargin10, yOrigin, mPaintAxes);
         //绘制X轴上的分段
         //当前横向等分的长度
-        for (int i = 0; i < horiItems.size(); i++) {
+        for (int i = 0; i < items.size(); i++) {
             if (isHideOddData) {
                 if (i % 2 == 1) {
-                    canvas.drawLine(xOrigin + halveX * (i + 1), yOrigin, xOrigin + halveX * (i + 1), yOrigin - mDivideHeight, mPaintDivide);
-                    String textStr = horiItems.get(i);
+//                    canvas.drawLine(xOrigin + halveX * (i + 1), yOrigin, xOrigin + halveX * (i + 1), yOrigin - mDivideHeight, mPaintDivide);
+                    String textStr = items.get(i).getDescribeName();
                     int textWith = (int) mPaintText.measureText(textStr);
-                    canvas.drawText(textStr, (xOrigin + halveX * (i + 1)) - textWith / 2, mHeight - mMargin10, mPaintText);
+                    String valueStr = items.get(i).getValue() + "";
+                    canvas.drawText(textStr, (xOrigin + halveX * (i + 1)) - textWith / 2, mHeight - mMargin10 / 2, mPaintText);
+
+                    int textWithValue = (int) mPaintText.measureText(valueStr);
+                    float yPrecent = (float) items.get(i).getValue() * (float) span / (float) maxValue;
+                    if (items.get(i).isWithAnim()) {
+                        canvas.drawText(valueStr, (xOrigin + halveX * (i + 1)) - textWithValue / 2, ((yOrigin - yPrecent * halveY) - mMargin10 / 3) * mProgress + (yOrigin * (1 - mProgress)), mPaintText);
+                    } else {
+                        canvas.drawText(valueStr, (xOrigin + halveX * (i + 1)) - textWithValue / 2, (yOrigin - yPrecent * halveY) - mMargin10 / 3, mPaintText);
+                    }
                 } else {
-                    canvas.drawLine(xOrigin + halveX * (i + 1), yOrigin, xOrigin + halveX * (i + 1), yOrigin - mDivideHeight * 2 / 3, mPaintDivide);
+//                    canvas.drawLine(xOrigin + halveX * (i + 1), yOrigin, xOrigin + halveX * (i + 1), yOrigin - mDivideHeight * 2 / 3, mPaintDivide);
                 }
             } else {
-                canvas.drawLine(xOrigin + halveX * (i + 1), yOrigin, xOrigin + halveX * (i + 1), yOrigin - mDivideHeight, mPaintDivide);
-                String textStr = horiItems.get(i);
+//                canvas.drawLine(xOrigin + halveX * (i + 1), yOrigin, xOrigin + halveX * (i + 1), yOrigin - mDivideHeight, mPaintDivide);
+                String textStr = items.get(i).getDescribeName();
                 int textWith = (int) mPaintText.measureText(textStr);
-                canvas.drawText(textStr, (xOrigin + halveX * (i + 1)) - textWith / 2, mHeight - mMargin10, mPaintText);
-            }
+                canvas.drawText(textStr, (xOrigin + halveX * (i + 1)) - textWith / 2, mHeight - mMargin10 / 2, mPaintText);
 
+                String valueStr = items.get(i).getValue() + "";
+                int textWithValue = (int) mPaintText.measureText(valueStr);
+                float yPrecent = (float) items.get(i).getValue() * (float) span / (float) maxValue;
+                if (items.get(i).isWithAnim()) {
+                    canvas.drawText(valueStr, (xOrigin + halveX * (i + 1)) - textWithValue / 2, ((yOrigin - yPrecent * halveY) - mMargin10 / 3) * mProgress + (yOrigin * (1 - mProgress)), mPaintText);
+                } else {
+                    canvas.drawText(valueStr, (xOrigin + halveX * (i + 1)) - textWithValue / 2, (yOrigin - yPrecent * halveY) - mMargin10 / 3, mPaintText);
+                }
+            }
 
         }
 
@@ -596,6 +484,9 @@ public class ChartLineView extends View {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
                 mProgress = (float) animation.getAnimatedValue();
+                if (mWidth != 0) {
+                    calculLine();
+                }
                 invalidate();
             }
         });
@@ -606,54 +497,5 @@ public class ChartLineView extends View {
     private boolean isActionUp;//是否手指离开了
     private int currentIndex;//松手后的index
 
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        if (!isOnTouch) {
-            return false;
-        }
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                downX = event.getX();
-                if (downX < xOrigin) {
-                    downX = xOrigin;
-                } else if (downX > mWidth - 2 * mMargin10) {
-                    downX = mWidth - 2 * mMargin10;
-                }
-                invalidate();
-                //放置父类消费点击事件
-                getParent().requestDisallowInterceptTouchEvent(true);
-                return true;
-
-            case MotionEvent.ACTION_MOVE:
-                downX = event.getX();
-                if (downX < xOrigin) {
-                    downX = xOrigin;
-                } else if (downX > mWidth - 2 * mMargin10) {
-                    downX = mWidth - 2 * mMargin10;
-                }
-                invalidate();
-                return true;
-
-            case MotionEvent.ACTION_UP:
-                downX = event.getX();
-                if (downX < xOrigin) {
-                    downX = xOrigin;
-                } else if (downX > mWidth - 2 * mMargin10) {
-                    downX = mWidth - 2 * mMargin10;
-                }
-
-                //当前在坐标轴里的长度是
-                float trueLength = downX - mMargin10;
-                float rate = trueLength / halveX;
-                currentIndex = (int) new BigDecimal(rate).setScale(0, BigDecimal.ROUND_HALF_UP).floatValue();
-
-                downX = currentIndex * halveX + mMargin10;
-                isActionUp = true;
-                invalidate();
-                getParent().requestDisallowInterceptTouchEvent(false);
-                break;
-        }
-        return super.onTouchEvent(event);
-    }
 
 }

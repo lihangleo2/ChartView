@@ -30,6 +30,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.button2:
                 startActivity(new Intent(MainActivity.this, ChartLineViewActivity.class));
                 break;
+
+            case R.id.button3:
+                startActivity(new Intent(MainActivity.this, ChartHistogramViewActivity.class));
+                break;
         }
     }
 }

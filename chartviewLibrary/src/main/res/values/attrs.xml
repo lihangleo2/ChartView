@@ -63,4 +63,7 @@
         <attr name="cv_isArc" format="boolean" /> <!--形状是否为扇形-->
         <attr name="cv_isAnim" format="boolean" /> <!--是否需要动画-->
     </declare-styleable>
+
+
+
 </resources>

@@ -32,7 +32,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="自定义折线统计图" />
+            android:text="自定义折线(或曲线)统计图" />
+
+
+        <Button
+            android:onClick="@{onClickListener}"
+            android:id="@+id/button3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="自定义柱状统计图" />
 
     </LinearLayout>
 </layout>

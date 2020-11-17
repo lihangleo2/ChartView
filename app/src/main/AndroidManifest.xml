@@ -19,6 +19,7 @@
 
         <activity android:name=".ChartLineViewActivity" />
         <activity android:name=".ChatCircleViewActivity" />
+        <activity android:name=".ChartHistogramViewActivity" />
 
         <meta-data
             android:name="ATMAN_CHANNEL"

@@ -25,6 +25,7 @@ import androidx.annotation.Nullable;
 /**
  * Created by leo
  * on 2020/4/16.
+ * 饼状图
  */
 public class ChartCircleView extends View {
     private int mWidth; //  控件宽度
