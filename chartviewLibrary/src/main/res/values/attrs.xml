@@ -48,6 +48,7 @@
 
         <!-- 折线图动画的时间 (关于折线相关的设置在代码setItems里)-->
         <attr name="cl_lineAnim_duration" format="integer" /> <!--折线动画时间-->
+        <attr name="cl_isCurve" format="boolean" /> <!--把折线改成曲线-->
 
     </declare-styleable>
 

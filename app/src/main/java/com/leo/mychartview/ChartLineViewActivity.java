@@ -90,6 +90,20 @@ public class ChartLineViewActivity extends AppCompatActivity {
                     break;
             }
         });
+
+
+        //移除红色填充阴影
+        binding.rgMode.setOnCheckedChangeListener((RadioGroup rg, int checkedId) -> {
+            switch (checkedId) {
+                case R.id.radio_line:
+                    binding.chartLineView.setIsCurve(false);
+                    break;
+
+                case R.id.radio_curve:
+                    binding.chartLineView.setIsCurve(true);
+                    break;
+            }
+        });
     }
 
     private void initData() {

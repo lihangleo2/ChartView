@@ -198,7 +198,7 @@ xml里只需要这样：
 #### 23、提醒背景颜色  app:cl_remind_backColor="#00BCD4"
 #### 24、提醒文字颜色  app:cl_remind_textColor="#ff0000"
 #### 25、提醒文字大小  app:cl_remind_textSize="15dp"
-
+#### 25、是需要折线还是需要曲线  app:cl_isCurve="true"
 修改后如图：
 
 <img src="https://github.com/lihangleo2/ChartView/blob/master/gifs/remind.png" alt="Sample"  width="350">

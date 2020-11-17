@@ -103,11 +103,20 @@ public class ChartLineView extends View {
 
     private Handler mHandler;
     private Runnable runnable;
+    private boolean isCurve;//是否需要曲线
 
 
     public void setItems(ArrayList<ChartLineItem> items) {
         this.items = items;
         initItemPaint(items);
+        if (mWidth != 0) {
+            calculLine();
+        }
+        startAnim();
+    }
+
+    public void setIsCurve(boolean isCurve) {
+        this.isCurve = isCurve;
         if (mWidth != 0) {
             calculLine();
         }
@@ -200,6 +209,7 @@ public class ChartLineView extends View {
         lineDuration = typedArray.getInt(R.styleable.ChartLineView_cl_lineAnim_duration, 1000);
         dashStayDuration = typedArray.getInt(R.styleable.ChartLineView_cl_dashStay_duration, 1500);
         isShowYDash = typedArray.getBoolean(R.styleable.ChartLineView_cl_Y_showDash, false);
+        isCurve = typedArray.getBoolean(R.styleable.ChartLineView_cl_isCurve, false);
         typedArray.recycle();
         mMargin10 = DensityUtils.dp2px(context, 10);
         initPaint();
@@ -385,6 +395,18 @@ public class ChartLineView extends View {
     }
 
 
+    public float getChatX(int index) {
+        float x = index * halveX + xOrigin;
+        return x;
+    }
+
+
+    public float getChatY(float value) {
+        float yPrecent = value * (float) span / (float) maxValue;
+        float y = yOrigin - yPrecent * halveY;
+        return y;
+    }
+
     //计算第一条曲线的path,还有阴影的方法
     private void calculLine() {
         if (items != null && items.size() > 0) {
@@ -400,27 +422,65 @@ public class ChartLineView extends View {
                     mPathShader = new Path();
                 }
 
-                for (int j = 0; j < datas.size(); j++) {
-                    float x = j * halveX + xOrigin;
-                    float yPrecent = (float) datas.get(j) * (float) span / (float) maxValue;
-                    if (j == 0) {
-                        mPath.moveTo(x, yOrigin - yPrecent * halveY);
-                        if (mPathShader != null) {
-                            mPathShader.moveTo(x, yOrigin - yPrecent * halveY);
-                        }
-                    } else {
-                        mPath.lineTo(x, yOrigin - yPrecent * halveY);
-                        if (mPathShader != null) {
-                            mPathShader.lineTo(x, yOrigin - yPrecent * halveY);
-                        }
 
-                        if (j == datas.size() - 1 && mPathShader != null) {
-                            mPathShader.lineTo(x, yOrigin);
-                            mPathShader.lineTo(xOrigin, yOrigin);
-                            mPathShader.close();
+                if (isCurve) {
+                    for (int j = 0; j < datas.size(); j++) {
+
+                        if (j != datas.size() - 1) {
+                            if (j == 0) {
+                                mPath.moveTo(getChatX(j), getChatY(datas.get(j)));
+                                if (mPathShader != null) {
+                                    mPathShader.moveTo(getChatX(j), getChatY(datas.get(j)));
+                                }
+                            }
+                            mPath.cubicTo((getChatX(j) + getChatX(j + 1)) / 2,
+                                    getChatY(datas.get(j)),
+                                    (getChatX(j) + getChatX(j + 1)) / 2,
+                                    getChatY(datas.get(j + 1)),
+                                    getChatX(j + 1),
+                                    getChatY(datas.get(j + 1)));
+                            if (mPathShader != null) {
+                                mPathShader.cubicTo((getChatX(j) + getChatX(j + 1)) / 2,
+                                        getChatY(datas.get(j)),
+                                        (getChatX(j) + getChatX(j + 1)) / 2,
+                                        getChatY(datas.get(j + 1)),
+                                        getChatX(j + 1),
+                                        getChatY(datas.get(j + 1)));
+                            }
+                        } else {
+                            if (mPathShader != null) {
+                                mPathShader.lineTo(getChatX(j), yOrigin);
+                                mPathShader.lineTo(xOrigin, yOrigin);
+                                mPathShader.close();
+                            }
                         }
                     }
+                } else {
+
+                    for (int j = 0; j < datas.size(); j++) {
+                        float x = j * halveX + xOrigin;
+                        float yPrecent = (float) datas.get(j) * (float) span / (float) maxValue;
+                        if (j == 0) {
+                            mPath.moveTo(x, yOrigin - yPrecent * halveY);
+                            if (mPathShader != null) {
+                                mPathShader.moveTo(x, yOrigin - yPrecent * halveY);
+                            }
+                        } else {
+                            mPath.lineTo(x, yOrigin - yPrecent * halveY);
+                            if (mPathShader != null) {
+                                mPathShader.lineTo(x, yOrigin - yPrecent * halveY);
+                            }
+
+                            if (j == datas.size() - 1 && mPathShader != null) {
+                                mPathShader.lineTo(x, yOrigin);
+                                mPathShader.lineTo(xOrigin, yOrigin);
+                                mPathShader.close();
+                            }
+                        }
+                    }
+
                 }
+
 
                 chartUtilBean.setmPath(mPath);
                 chartUtilBean.setmPathShadow(mPathShader);
