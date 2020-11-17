@@ -1,4 +1,4 @@
-package com.lihang.chart;
+package com.lihang.chart.utils;
 
 import android.content.Context;
 import android.util.DisplayMetrics;

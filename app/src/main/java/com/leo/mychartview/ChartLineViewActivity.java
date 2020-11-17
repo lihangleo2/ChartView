@@ -4,9 +4,7 @@ import android.os.Bundle;
 import android.widget.RadioGroup;
 
 import com.leo.mychartview.databinding.ActivityLineChartBinding;
-import com.lihang.chart.ChartCircleItem;
-import com.lihang.chart.ChartLineItem;
-import com.lihang.chart.ChartLineView;
+import com.lihang.chart.utils.ChartLineItem;
 
 import java.util.ArrayList;
 

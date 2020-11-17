@@ -43,7 +43,7 @@
 xml里只需要这样：
 
 ```xml
-<com.lihang.chart.ChartLineView
+<com.lihang.chart.view.ChartLineView
     android:id="@+id/chartLineView"
     android:layout_width="match_parent"
     android:layout_height="200dp"
@@ -224,7 +224,7 @@ xml里只需要这样：
 
 ## 使用(未使用自定义属性，则使用默认值)
 ```xml
-<com.lihang.chart.ChartCircleView
+<com.lihang.chart.view.ChartCircleView
     android:id="@+id/charCircleView"
     android:layout_width="wrap_content"
     android:layout_height="200dp" />

@@ -1,4 +1,4 @@
-package com.lihang.chart;
+package com.lihang.chart.view;
 
 import android.animation.ValueAnimator;
 import android.content.Context;
@@ -14,8 +14,8 @@ import android.view.View;
 import android.view.animation.LinearInterpolator;
 
 import com.lihang.chart.R;
-import com.lihang.chart.DensityUtils;
-import com.lihang.chart.ChartCircleItem;
+import com.lihang.chart.utils.DensityUtils;
+import com.lihang.chart.utils.ChartCircleItem;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;

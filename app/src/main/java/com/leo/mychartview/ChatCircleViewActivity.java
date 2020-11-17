@@ -1,13 +1,10 @@
 package com.leo.mychartview;
 
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 import android.widget.RadioGroup;
 
 import com.leo.mychartview.databinding.ActivityCircleChartBinding;
-import com.lihang.chart.ChartCircleItem;
-import com.lihang.chart.ChartCircleView;
+import com.lihang.chart.utils.ChartCircleItem;
 
 import java.util.ArrayList;
 
